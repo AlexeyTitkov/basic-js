@@ -17,9 +17,30 @@ const HALF_LIFE_PERIOD = 5730;
  * dateSample('WOOT!') => false
  *
  */
-function dateSample(/* sampleActivity */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function dateSample(sampleActivity) {
+
+// Если sampleActivity не является строкой или не может быть преобразовано в "число с плавающей точкой",
+// возвращаем false
+    if (typeof sampleActivity !== 'string' || isNaN(parseFloat(sampleActivity))) {
+      return false;
+    }
+
+// Преобразование строки в "число с плавающей точкой"
+    const activity = parseFloat(sampleActivity);
+
+// Если activity не лежит в интервале от 0 до MODERN_ACTIVITY, возвращаем false
+    if (activity <= 0 || activity > MODERN_ACTIVITY) {
+      return false;
+    }
+
+// Расчет k, используя полураспад периода
+    const k = 0.693 / HALF_LIFE_PERIOD;
+
+// Расчет возраста, округленного до целого в большую сторону
+    const age = Math.ceil(Math.log(MODERN_ACTIVITY / activity) / k);
+
+// Возвращаем возраст
+    return age;
 }
 
 module.exports = {
