@@ -13,9 +13,23 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 class DepthCalculator {
-  calculateDepth(/* arr */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  calculateDepth(arr, depth = 1) {
+     // Задам переменную maxDepth равную начальной глубине
+    let maxDepth = depth;
+     // Проходим циклом по каждому элементу массива
+    for (let i = 0; i < arr.length; i++) {
+     // Если элемент массива является массивом, то рекурсивно вызываем метод calculateDepth,
+     // увеличивая глубину на 1
+      if (Array.isArray(arr[i])) {
+        const currentDepth = this.calculateDepth(arr[i], depth + 1);
+       // Если текущая глубина больше максимальной, то обновляем максимальную глубину
+        if (currentDepth > maxDepth) {
+          maxDepth = currentDepth;
+        }
+      }
+    }
+     // Возвращаем максимальную глубину
+    return maxDepth;
   }
 }
 
